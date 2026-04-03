@@ -1,26 +1,37 @@
-
+function remove(list) {
+    list.forEach(e => {
+        if (e) e.remove()
+    })
+}
 
 function execute_mainpage() {
+    let primary = document.getElementById("primary");
     let remove_elements = [
         document.getElementById("guide-button"),
         document.getElementById("chips-wrapper"),
-        document.getElementById("primary"),
         document.getElementById("voice-search-button"),
-        Array.from(document.getElementsByTagName("ytd-mini-guide-entry-renderer"))
-            .find(e => e.getAttribute("href") === "/shorts/")?.parentNode
-    ].filter(Boolean); // removes null/undefined
+    ]
+    if (primary) {
+        while (primary.firstChild) {
+            primary.removeChild(primary.firstChild);
+        }
+    }
 
-    remove_elements.forEach(e => {
-        if (e) e.remove();
-    });
+    remove(remove_elements);
 }
 
 function execute_shorts() {
+
+
     let remove_elements = [
-
-        document.getElementById("shorts-container")
-
+        document.getElementById("reel-overlay-container"),
+        document.getElementById("shorts-container"),
+        document.getElementById("shorts-inner-container"),
+        ...Array.from(document.getElementsByTagName("ytd-shorts")),
+        ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")),
     ]
+    remove(remove_elements)
+
 }
 
 let events_main = [
@@ -28,16 +39,23 @@ let events_main = [
     "yt-service-request-sent",
     "yt-page-data-updated",
     "iron-overlay-opened",
+    "yt-page-type-changed",
 ]
 events_main.forEach(e => {
-    document.addEventListener(e, execute_mainpage, { once: true });
+    document.addEventListener(e, execute_mainpage);
 })
 
-/*
-// I don't care just die pls already
-document.addeventlistener("yt-service-request-completed", execute_shorts);
-document.addeventlistener("yt-service-request-sent", execute_shorts);
-document.addeventlistener("yt-page-data-updated", execute_mainpage, { once: true });
-document.addeventlistener("iron-overlay-opened", execute_mainpage, { once: true });
-
-*/
+let events_shorts = [
+    "yt-shorts-reset",
+    "yt-page-data-updated",
+    "DOMContentLoaded",
+    "load",
+    "yt-service-request-completed",
+    "yt-service-request-sent",
+    "yt-page-data-updated",
+    "iron-overlay-opened",
+    "yt-page-type-changed",
+]
+events_shorts.forEach(e => {
+    document.addEventListener(e, execute_shorts)
+})
