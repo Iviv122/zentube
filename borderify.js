@@ -1,21 +1,9 @@
+let removed_main = false
+
 function remove(list) {
     list.forEach(e => {
         if (e) e.remove()
     })
-}
-
-function execute_mainpage() {
-    let primary = document.getElementById("primary");
-    let remove_elements = [
-        document.getElementById("chips-wrapper"),
-    ]
-    if (primary) {
-        while (primary.firstChild) {
-            primary.removeChild(primary.firstChild);
-        }
-    }
-
-    remove(remove_elements);
 }
 
 function execute_always() {
@@ -26,24 +14,45 @@ function execute_always() {
         document.getElementById("shorts-container"),
         document.getElementById("shorts-inner-container"),
         document.getElementById("voice-search-button"),
+        document.getElementById("chips-wrapper"),
+        ...Array.from(document.getElementsByTagName("chip-bar-view-model")),
+        ...Array.from(document.getElementsByTagName("ytd-reel-shelf-renderer")),
         ...Array.from(document.getElementsByTagName("ytd-shorts")),
         ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")),
         ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/")
     ]
     remove(remove_elements)
 
+    let mains = [
+        "home",
+    ]
+    Array.from(document.getElementsByTagName("ytd-browse"))
+        .filter(e => mains.includes(e.getAttribute('page-subtype')))
+        .forEach(e => {
+            if (e) {
+                while (e.firstChild) {
+                    if (e.firstChild.id === "header") {
+                        break;
+                    }
+                    e.removeChild(e.firstChild);
+                }
+                while (e.lastChild) {
+                    if (e.lastChild.id === "header") {
+                        break;
+                    }
+                    e.removeChild(e.lastChild)
+                }
+                console.log(e.firstChild);
+                if (e.firstChild) {
+
+                    e.firstChild.innerText = "Hello World"
+                    e.firstChild.style.zIndex = "3000"
+                    e.firstChild.style.color = "white"
+                }
+            }
+        })
 }
 
-let events_main = [
-    "yt-service-request-completed",
-    "yt-service-request-sent",
-    "yt-page-data-updated",
-    "iron-overlay-opened",
-    "yt-page-type-changed",
-]
-events_main.forEach(e => {
-    document.addEventListener(e, execute_mainpage);
-})
 
 let events_always = [
     "yt-shorts-reset",
@@ -55,7 +64,12 @@ let events_always = [
     "yt-page-data-updated",
     "iron-overlay-opened",
     "yt-page-type-changed",
+    "clicked",
+    "focus",
+    "click",
+    "mouseover"
 ]
+
 events_always.forEach(e => {
     document.addEventListener(e, execute_always)
 })
