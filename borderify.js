@@ -7,9 +7,7 @@ function remove(list) {
 function execute_mainpage() {
     let primary = document.getElementById("primary");
     let remove_elements = [
-        document.getElementById("guide-button"),
         document.getElementById("chips-wrapper"),
-        document.getElementById("voice-search-button"),
     ]
     if (primary) {
         while (primary.firstChild) {
@@ -20,15 +18,17 @@ function execute_mainpage() {
     remove(remove_elements);
 }
 
-function execute_shorts() {
+function execute_always() {
 
 
     let remove_elements = [
         document.getElementById("reel-overlay-container"),
         document.getElementById("shorts-container"),
         document.getElementById("shorts-inner-container"),
+        document.getElementById("voice-search-button"),
         ...Array.from(document.getElementsByTagName("ytd-shorts")),
         ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")),
+        ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/")
     ]
     remove(remove_elements)
 
@@ -45,7 +45,7 @@ events_main.forEach(e => {
     document.addEventListener(e, execute_mainpage);
 })
 
-let events_shorts = [
+let events_always = [
     "yt-shorts-reset",
     "yt-page-data-updated",
     "DOMContentLoaded",
@@ -56,6 +56,6 @@ let events_shorts = [
     "iron-overlay-opened",
     "yt-page-type-changed",
 ]
-events_shorts.forEach(e => {
-    document.addEventListener(e, execute_shorts)
+events_always.forEach(e => {
+    document.addEventListener(e, execute_always)
 })
