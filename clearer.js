@@ -1,9 +1,11 @@
-let removed_main = false
-
 function remove(list) {
     list.forEach(e => {
         if (e) e.remove()
     })
+}
+
+function onError(error) {
+    console.log(`Error: ${error}`);
 }
 
 function execute_always() {
@@ -15,6 +17,7 @@ function execute_always() {
         document.getElementById("shorts-inner-container"),
         document.getElementById("voice-search-button"),
         document.getElementById("chips-wrapper"),
+        ...Array.from(document.getElementsByTagName("grid-shelf-view-model")),
         ...Array.from(document.getElementsByTagName("chip-bar-view-model")),
         ...Array.from(document.getElementsByTagName("ytd-reel-shelf-renderer")),
         ...Array.from(document.getElementsByTagName("ytd-shorts")),
@@ -26,6 +29,7 @@ function execute_always() {
     let mains = [
         "home",
     ]
+
     Array.from(document.getElementsByTagName("ytd-browse"))
         .filter(e => mains.includes(e.getAttribute('page-subtype')))
         .forEach(e => {
@@ -43,12 +47,24 @@ function execute_always() {
                     e.removeChild(e.lastChild)
                 }
                 console.log(e.firstChild);
-                if (e.firstChild) {
 
-                    e.firstChild.innerText = "Hello World"
-                    e.firstChild.style.zIndex = "3000"
-                    e.firstChild.style.color = "white"
-                }
+
+                browser.storage.sync.get("intro_label")
+                    .then(Response => {
+                        console.log(Response.intro_label)
+                        if (Response.intro_label === "yes" || Response.intro_label === undefined) {
+                            if (e.firstChild) {
+
+                                e.firstChild.innerText = "Check plugin settings to configure your experience and remove this annoying label"
+                                e.firstChild.style.zIndex = "3000"
+                                e.firstChild.style.color = "white"
+                                e.firstChild.style.fontSize = "45px";
+                            }
+                        }
+                    }, onError);
+
+
+
             }
         })
 }
