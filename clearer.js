@@ -34,36 +34,40 @@ function execute_always() {
         .filter(e => mains.includes(e.getAttribute('page-subtype')))
         .forEach(e => {
             if (e) {
-                while (e.firstChild) {
-                    if (e.firstChild.id === "header") {
-                        break;
-                    }
-                    e.removeChild(e.firstChild);
-                }
-                while (e.lastChild) {
-                    if (e.lastChild.id === "header") {
-                        break;
-                    }
-                    e.removeChild(e.lastChild)
-                }
-                console.log(e.firstChild);
-
-
-                browser.storage.sync.get("intro_label")
+                browser.storage.sync.get("videos_main")
                     .then(Response => {
-                        console.log(Response.intro_label)
-                        if (Response.intro_label === "yes" || Response.intro_label === undefined) {
-                            if (e.firstChild) {
+                        console.log("videos_main:" + Response.videos_main)
+                        if (Response.videos_main === undefined || Response.videos_main == "no") {
+                            while (e.firstChild && (Response.videos_main === "no" || Response.videos_main === undefined)) {
 
-                                e.firstChild.innerText = "Check plugin settings to configure your experience and remove this annoying label"
-                                e.firstChild.style.zIndex = "3000"
-                                e.firstChild.style.color = "white"
-                                e.firstChild.style.fontSize = "45px";
+                                if (e.firstChild.id === "header") {
+                                    break;
+                                }
+                                e.removeChild(e.firstChild);
+                            }
+                            while (e.firstChild && (Response.videos_main === "no" || Response.videos_main === undefined)) {
+                                if (e.lastChild.id === "header") {
+                                    break;
+                                }
+                                e.removeChild(e.lastChild)
                             }
                         }
-                    }, onError);
+
+                        browser.storage.sync.get("intro_label")
+                            .then(Response1 => {
+                                if (Response1.intro_label === undefined || Response1.intro_label) {
+                                    if (e.firstChild) {
+                                        e.firstChild.innerText = "Check plugin settings to configure your experience and remove this annoying label"
+                                        e.firstChild.style.zIndex = "3000"
+                                        e.firstChild.style.color = "white"
+                                        e.firstChild.style.fontSize = "45px";
+                                    }
+                                }
+                            }, onError);
 
 
+
+                    }, onError)
 
             }
         })
