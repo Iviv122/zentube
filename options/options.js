@@ -1,3 +1,25 @@
+const properites = [
+  "videos_main",
+]
+
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
+function load_default() {
+  console.log("loading defaults")
+  browser.storage.sync.get("videos_main").then(r => {
+    if (r.videos_main === undefined) {
+      browser.storage.sync.set({
+        intro_label: false,
+        videos_main: "no"
+      });
+      console.log("saved")
+    }
+
+  })
+
+}
+
 function saveOptions(e) {
   e.preventDefault();
   browser.storage.sync.set({
@@ -7,22 +29,17 @@ function saveOptions(e) {
 }
 
 function restoreOptions() {
-  function setCurrentChoice(result) {
-    if (result.videos_main) {
-      document.querySelector("#videos_main").checked = result.videos_main === "yes" ? true : false;
-    } else {
-      document.querySelector("#videos_main").checked = result.videos_main = false;
-    }
-  }
 
-  function onError(error) {
-    console.log(`Error: ${error}`);
-  }
+  load_default();
 
-  browser.storage.sync.get("intro_label")
-    .then(setCurrentChoice, onError);
+  properites.forEach(p => {
+    browser.storage.sync.get(p)
+      .then(r => {
+        document.querySelector("#" + p).checked = r[p] === "yes";
+      }, onError);
+  });
+
 }
-
 
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
