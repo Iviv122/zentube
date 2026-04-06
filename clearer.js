@@ -37,6 +37,7 @@ function execute_always() {
         ...Array.from(document.getElementsByTagName("ytd-reel-shelf-renderer")),
         ...Array.from(document.getElementsByTagName("ytd-shorts")),
         ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")),
+        ...Array.from(document.getElementsByTagName("yt-chip-cloud-renderer")),
         ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/"),
         ...Array.from(document.getElementsByTagName("ytd-engagement-panel-section-list-renderer")) // ENGAGING CONTENT LOL, GO CHECK THIS XDDD
     ]
