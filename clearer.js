@@ -58,6 +58,8 @@ async function additional_removal() {
     let ret = []
 
     const leftMenuRes = await browser.storage.sync.get("left_panel");
+    const logoRes = await browser.storage.sync.get("logo");
+    const accountInfoRes = await browser.storage.sync.get("account_info");
 
     if (leftMenuRes.left_panel === undefined || leftMenuRes.left_panel === "no") {
         ret.push(document.getElementById("guide-wrapper"));
@@ -65,21 +67,21 @@ async function additional_removal() {
         ret.push(document.getElementById("guide-button"));
     }
 
-    if (true) {
-
+    if (logoRes.logo === undefined || logoRes.logo === "no") {
         Array.from(document.getElementsByTagName("ytd-topbar-logo-renderer")).forEach(el => {
             while (el.firstChild) {
                 el.removeChild(el.firstChild)
             }
         }
         )
+    }
 
+    if (accountInfoRes.account_info === undefined || accountInfoRes.account_info === "no") {
         let right = document.getElementById("end");
         while (right.firstChild) {
             right.removeChild(right.firstChild);
         }
     }
-
     remove_items_list(ret)
     return ret;
 }

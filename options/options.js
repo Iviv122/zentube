@@ -3,7 +3,9 @@ const properites = [
   "comments_section",
   "right_panel",
   "playlist",
-  "left_panel"
+  "left_panel",
+  "logo",
+  "account_info"
 ]
 
 function onError(error) {
