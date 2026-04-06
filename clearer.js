@@ -8,6 +8,21 @@ function onError(error) {
     console.log(`Error: ${error}`);
 }
 
+function remove_all_but_header(e) {
+    while (e.firstChild) {
+        if (e.firstChild.id === "header") {
+            break;
+        }
+        e.removeChild(e.firstChild);
+    }
+    while (e.firstChild) {
+        if (e.lastChild.id === "header") {
+            break;
+        }
+        e.removeChild(e.lastChild)
+    }
+}
+
 function execute_always() {
 
 
@@ -22,7 +37,8 @@ function execute_always() {
         ...Array.from(document.getElementsByTagName("ytd-reel-shelf-renderer")),
         ...Array.from(document.getElementsByTagName("ytd-shorts")),
         ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")),
-        ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/")
+        ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/"),
+        ...Array.from(document.getElementsByTagName("ytd-engagement-panel-section-list-renderer")) // ENGAGING CONTENT LOL, GO CHECK THIS XDDD
     ]
     remove(remove_elements)
 
@@ -30,37 +46,24 @@ function execute_always() {
         "home",
     ]
 
+    // try to remove main page content
     Array.from(document.getElementsByTagName("ytd-browse"))
         .filter(e => mains.includes(e.getAttribute('page-subtype')))
-        .forEach(e => {
-            if (e) {
+        .forEach(root => {
+            if (root) {
                 browser.storage.sync.get("videos_main")
                     .then(Response => {
-                        console.log("videos_main:" + Response.videos_main)
-                        if (Response.videos_main === undefined || Response.videos_main == "no") {
-                            while (e.firstChild && (Response.videos_main === "no" || Response.videos_main === undefined)) {
 
-                                if (e.firstChild.id === "header") {
-                                    break;
-                                }
-                                e.removeChild(e.firstChild);
-                            }
-                            while (e.firstChild && (Response.videos_main === "no" || Response.videos_main === undefined)) {
-                                if (e.lastChild.id === "header") {
-                                    break;
-                                }
-                                e.removeChild(e.lastChild)
-                            }
-                        }
+                        if (Response.videos_main === "no" || Response.videos_main === undefined) remove_all_but_header(root);
 
                         browser.storage.sync.get("intro_label")
                             .then(Response1 => {
                                 if (Response1.intro_label === undefined || Response1.intro_label) {
-                                    if (e.firstChild) {
-                                        e.firstChild.innerText = "Check plugin settings to configure your experience and remove this annoying label"
-                                        e.firstChild.style.zIndex = "3000"
-                                        e.firstChild.style.color = "white"
-                                        e.firstChild.style.fontSize = "45px";
+                                    if (root.firstChild) {
+                                        root.firstChild.innerText = "Check plugin settings to configure your experience and remove this annoying label"
+                                        root.firstChild.style.zIndex = "3000"
+                                        root.firstChild.style.color = "white"
+                                        root.firstChild.style.fontSize = "45px";
                                     }
                                 }
                             }, onError);
