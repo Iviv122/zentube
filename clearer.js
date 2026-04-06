@@ -61,6 +61,7 @@ async function additional_removal() {
 
     if (leftMenuRes.left_panel === undefined || leftMenuRes.left_panel === "no") {
         ret.push(document.getElementById("guide-wrapper"));
+        ret.push(...Array.from(document.getElementsByTagName("ytd-mini-guide-renderer")));
         ret.push(document.getElementById("guide-button"));
     }
 
