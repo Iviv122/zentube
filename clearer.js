@@ -63,6 +63,22 @@ async function additional_removal() {
         ret.push(document.getElementById("guide-wrapper"));
         ret.push(document.getElementById("guide-button"));
     }
+
+    if (true) {
+
+        Array.from(document.getElementsByTagName("ytd-topbar-logo-renderer")).forEach(el => {
+            while (el.firstChild) {
+                el.removeChild(el.firstChild)
+            }
+        }
+        )
+
+        let right = document.getElementById("end");
+        while (right.firstChild) {
+            right.removeChild(right.firstChild);
+        }
+    }
+
     remove_items_list(ret)
     return ret;
 }
