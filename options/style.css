@@ -8,3 +8,14 @@ body {
     padding: 10px;
 }
 
+h2 {
+    padding: 10px;
+}
+
+br {
+    margin: 5px;
+}
+
+input {
+    margin-left: 5px;
+}

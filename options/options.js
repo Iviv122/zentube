@@ -3,6 +3,7 @@ const properites = [
   "comments_section",
   "right_panel",
   "playlist",
+  "left_panel"
 ]
 
 function onError(error) {
@@ -50,7 +51,6 @@ function restoreOptions() {
   });
 
 }
-
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);

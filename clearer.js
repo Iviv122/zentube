@@ -44,12 +44,30 @@ async function remove_during_video() {
             ...Array.from(document.getElementsByTagName("ytd-playlist-panel-renderer"))
         );
     }
+    if (playlistRes.playlist === undefined || playlistRes.playlist === "no") {
+        remove_elements.push(
+            ...Array.from(document.getElementsByTagName("ytd-playlist-panel-renderer"))
+        );
+    }
 
     remove_items_list(remove_elements);
 
 }
 
-function execute_always() {
+async function additional_removal() {
+    let ret = []
+
+    const leftMenuRes = await browser.storage.sync.get("left_panel");
+
+    if (leftMenuRes.left_panel === undefined || leftMenuRes.left_panel === "no") {
+        ret.push(document.getElementById("guide-wrapper"));
+        ret.push(document.getElementById("guide-button"));
+    }
+    remove_items_list(ret)
+    return ret;
+}
+
+async function execute_always() {
 
     switch (true) {
         case document.baseURI.includes("watch"):
@@ -72,6 +90,7 @@ function execute_always() {
         ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/"), // remove short button on main page in left panel
         ...Array.from(document.getElementsByTagName("ytd-engagement-panel-section-list-renderer")) // ENGAGING CONTENT LOL, GO CHECK THIS XDDD
     ]
+    additional_removal()
     remove_items_list(remove_elements)
 
     let mains = [
