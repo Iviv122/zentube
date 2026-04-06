@@ -1,4 +1,4 @@
-function remove(list) {
+function remove_items_list(list) {
     list.forEach(e => {
         if (e) e.remove()
     })
@@ -23,8 +23,39 @@ function remove_all_but_header(e) {
     }
 }
 
+async function remove_during_video() {
+    let remove_elements = [];
+
+    const rightPanelRes = await browser.storage.sync.get("right_panel");
+    const commentsRes = await browser.storage.sync.get("comments_section");
+    const playlistRes = await browser.storage.sync.get("playlist");
+
+    if (rightPanelRes.right_panel === undefined || rightPanelRes.right_panel === "no") {
+        remove_elements.push(document.getElementById("related")); // remove videos without playlist
+    }
+
+    if (commentsRes.comments_section === undefined || commentsRes.comments_section === "no") {
+        remove_elements.push(
+            ...Array.from(document.getElementsByTagName("ytd-comments"))
+        );
+    }
+    if (playlistRes.playlist === undefined || playlistRes.playlist === "no") {
+        remove_elements.push(
+            ...Array.from(document.getElementsByTagName("ytd-playlist-panel-renderer"))
+        );
+    }
+
+    remove_items_list(remove_elements);
+
+}
+
 function execute_always() {
 
+    switch (true) {
+        case document.baseURI.includes("watch"):
+            remove_during_video()
+            break;
+    }
 
     let remove_elements = [
         document.getElementById("reel-overlay-container"),
@@ -38,10 +69,10 @@ function execute_always() {
         ...Array.from(document.getElementsByTagName("ytd-shorts")),
         ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")),
         ...Array.from(document.getElementsByTagName("yt-chip-cloud-renderer")),
-        ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/"),
+        ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/"), // remove short button on main page in left panel
         ...Array.from(document.getElementsByTagName("ytd-engagement-panel-section-list-renderer")) // ENGAGING CONTENT LOL, GO CHECK THIS XDDD
     ]
-    remove(remove_elements)
+    remove_items_list(remove_elements)
 
     let mains = [
         "home",
@@ -95,5 +126,5 @@ let events_always = [
 ]
 
 events_always.forEach(e => {
-    document.addEventListener(e, execute_always)
+    document.addEventListener(e, execute_always);
 })

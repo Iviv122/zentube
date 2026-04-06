@@ -1,5 +1,8 @@
 const properites = [
   "videos_main",
+  "comments_section",
+  "right_panel",
+  "playlist",
 ]
 
 function onError(error) {
@@ -7,13 +10,15 @@ function onError(error) {
 }
 function load_default() {
   console.log("loading defaults")
+  let data = {
+    intro_label: false,
+  }
+  properites.forEach(p => {
+    data[p] = "no";
+  });
   browser.storage.sync.get("videos_main").then(r => {
     if (r.videos_main === undefined) {
-      browser.storage.sync.set({
-        intro_label: false,
-        videos_main: "no"
-      });
-      console.log("saved")
+      browser.storage.sync.set(data);
     }
 
   })
@@ -22,10 +27,15 @@ function load_default() {
 
 function saveOptions(e) {
   e.preventDefault();
-  browser.storage.sync.set({
+  let data = {
     intro_label: false,
-    videos_main: document.querySelector("#videos_main").checked ? "yes" : "no"
+  }
+
+  properites.forEach(p => {
+    data[p] = document.querySelector("#" + p).checked ? "yes" : "no";
   });
+
+  browser.storage.sync.set(data)
 }
 
 function restoreOptions() {
