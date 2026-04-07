@@ -8,7 +8,8 @@ const properites = [
   "logo",
   "account_info",
   "video_author",
-  "like_dislike"
+  "like_dislike",
+  "merch"
 ]
 
 function onError(error) {
