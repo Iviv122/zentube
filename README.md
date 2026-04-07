@@ -1,4 +1,4 @@
-# ZenTube - firefox, youtube-clearance controll addone
+# ZenTube - firefox, youtube-clearance controll addon with radical changes 
 
 Addon purposes are:
 - reduce doomscrolling
