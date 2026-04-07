@@ -29,6 +29,8 @@ async function remove_during_video() {
     const rightPanelRes = await browser.storage.sync.get("right_panel");
     const commentsRes = await browser.storage.sync.get("comments_section");
     const playlistRes = await browser.storage.sync.get("playlist");
+    const videoAuthorRes = await browser.storage.sync.get("video_author");
+    const likeDislikeRes = await browser.storage.sync.get("like_dislike");
 
     if (rightPanelRes.right_panel === undefined || rightPanelRes.right_panel === "no") {
         remove_elements.push(document.getElementById("related")); // remove videos without playlist
@@ -49,6 +51,18 @@ async function remove_during_video() {
             ...Array.from(document.getElementsByTagName("ytd-playlist-panel-renderer"))
         );
     }
+    if (videoAuthorRes.video_author === undefined || videoAuthorRes.video_author === "no") {
+        let author = document.getElementById("owner");
+        while (author.firstChild) {
+            author.removeChild(author.firstChild);
+        }
+    }
+    if (likeDislikeRes.like_dislike === undefined || likeDislikeRes.like_dislike === "no") {
+        let el = document.getElementsByTagName("segmented-like-dislike-button-view-model")[0];
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+    }
 
     remove_items_list(remove_elements);
 
@@ -60,7 +74,6 @@ async function additional_removal() {
     const leftMenuRes = await browser.storage.sync.get("left_panel");
     const logoRes = await browser.storage.sync.get("logo");
     const accountInfoRes = await browser.storage.sync.get("account_info");
-    const videoAuthorRes = await browser.storage.sync.get("video_author");
 
     if (leftMenuRes.left_panel === undefined || leftMenuRes.left_panel === "no") {
         ret.push(document.getElementById("guide-wrapper"));
@@ -84,14 +97,9 @@ async function additional_removal() {
         }
     }
 
-    if (videoAuthorRes.video_author === undefined || videoAuthorRes.video_author === "no") {
-        let author = document.getElementById("owner");
-        while (author.firstChild) {
-            author.removeChild(author.firstChild);
-        }
-    }
 
-    
+
+
     remove_items_list(ret)
     return ret;
 }

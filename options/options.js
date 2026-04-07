@@ -15,10 +15,6 @@ function onError(error) {
   console.log(`Error: ${error}`);
 }
 
-function init(){
-
-}
-
 function load_default() {
   console.log("loading defaults")
   let data = {
@@ -50,7 +46,6 @@ function saveOptions(e) {
 }
 
 function restoreOptions() {
-  init();
   load_default();
 
   properites.forEach(p => {
