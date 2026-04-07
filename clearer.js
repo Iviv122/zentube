@@ -165,7 +165,11 @@ async function execute_always() {
                             .then(Response1 => {
                                 if (Response1.intro_label === undefined || Response1.intro_label) {
                                     if (root.firstChild) {
-                                        root.firstChild.innerText = "Check plugin settings to configure your experience and remove this annoying label"
+                                        root.firstChild.innerText = `Check plugin settings to configure your experience and remove this annoying label
+                                        You can go to about:addons (or simply settings) and open zenube -> preferences
+                                        or
+                                        you can open extensions tab (right top corner) and click on zentube
+                                        `
                                         root.firstChild.style.zIndex = "3000"
                                         root.firstChild.style.color = "white"
                                         root.firstChild.style.fontSize = "45px";
