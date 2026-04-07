@@ -1,3 +1,4 @@
+const form = document.getElementById("form");
 const properites = [
   "videos_main",
   "comments_section",
@@ -5,12 +6,19 @@ const properites = [
   "playlist",
   "left_panel",
   "logo",
-  "account_info"
+  "account_info",
+  "video_author",
+  "like_dislike"
 ]
 
 function onError(error) {
   console.log(`Error: ${error}`);
 }
+
+function init(){
+
+}
+
 function load_default() {
   console.log("loading defaults")
   let data = {
@@ -42,7 +50,7 @@ function saveOptions(e) {
 }
 
 function restoreOptions() {
-
+  init();
   load_default();
 
   properites.forEach(p => {

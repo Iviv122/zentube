@@ -60,6 +60,7 @@ async function additional_removal() {
     const leftMenuRes = await browser.storage.sync.get("left_panel");
     const logoRes = await browser.storage.sync.get("logo");
     const accountInfoRes = await browser.storage.sync.get("account_info");
+    const videoAuthorRes = await browser.storage.sync.get("video_author");
 
     if (leftMenuRes.left_panel === undefined || leftMenuRes.left_panel === "no") {
         ret.push(document.getElementById("guide-wrapper"));
@@ -82,6 +83,15 @@ async function additional_removal() {
             right.removeChild(right.firstChild);
         }
     }
+
+    if (videoAuthorRes.video_author === undefined || videoAuthorRes.video_author === "no") {
+        let author = document.getElementById("owner");
+        while (author.firstChild) {
+            author.removeChild(author.firstChild);
+        }
+    }
+
+    
     remove_items_list(ret)
     return ret;
 }
