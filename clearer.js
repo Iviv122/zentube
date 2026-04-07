@@ -141,7 +141,8 @@ async function execute_always() {
         ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")),
         ...Array.from(document.getElementsByTagName("yt-chip-cloud-renderer")),
         ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/"), // remove short button on main page in left panel
-        ...Array.from(document.getElementsByTagName("ytd-engagement-panel-section-list-renderer")) // ENGAGING CONTENT LOL, GO CHECK THIS XDDD
+        ...Array.from(document.getElementsByTagName("ytd-engagement-panel-section-list-renderer")), // ENGAGING CONTENT LOL, GO CHECK THIS XDDD
+        ...Array.from(document.getElementsByName("ytd-companion-slot-renderer"))
     ]
     additional_removal()
     remove_items_list(remove_elements)

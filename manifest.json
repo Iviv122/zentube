@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Zentube",
   "version": "1.0",
   "description": "Customization for youtube clearance",
@@ -10,6 +10,11 @@
     "gecko": {
       "id": "zentube@addon"
     }
+  },
+  "action": {
+    "default_icon": "icons/icon32.png",
+    "default_title": "Zentube-settings",
+    "default_popup": "options/options.html"
   },
   "content_scripts": [
     {
@@ -25,6 +30,7 @@
     "page": "options/options.html"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "scripting"
   ]
 }
