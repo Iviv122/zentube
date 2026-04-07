@@ -2,7 +2,6 @@
   "manifest_version": 3,
   "name": "Zentube",
   "description": "Customization for youtube clearance",
-  "home_page": "https://github.com/Iviv122/zentube",
   "version": "1.0",
   "icons": {
     "32": "icons/icon32.png"

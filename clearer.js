@@ -1,6 +1,6 @@
 function remove_items_list(list) {
-    list.forEach(e => {
-        if (e) e.remove()
+    list.forEach(element => {
+        if (element) element.remove()
     })
 }
 
@@ -8,18 +8,18 @@ function onError(error) {
     console.log(`Error: ${error}`);
 }
 
-function remove_all_but_header(e) {
-    while (e.firstChild) {
-        if (e.firstChild.id === "header") {
+function remove_all_but_header(element) {
+    while (element.firstChild) {
+        if (element.firstChild.id === "header") {
             break;
         }
-        e.removeChild(e.firstChild);
+        element.removeChild(element.firstChild);
     }
-    while (e.firstChild) {
-        if (e.lastChild.id === "header") {
+    while (element.firstChild) {
+        if (element.lastChild.id === "header") {
             break;
         }
-        e.removeChild(e.lastChild)
+        element.removeChild(element.lastChild)
     }
 }
 
@@ -91,6 +91,7 @@ async function additional_removal() {
     const logoRes = await browser.storage.sync.get("logo");
     const accountInfoRes = await browser.storage.sync.get("account_info");
     const voiceSearchRes = await browser.storage.sync.get("voice_search");
+    const thumnailRes = await browser.storage.sync.get("thumnails");
 
     if (leftMenuRes.left_panel === undefined || leftMenuRes.left_panel === "no") {
         ret.push(document.getElementById("guide-wrapper"));
@@ -116,6 +117,10 @@ async function additional_removal() {
 
     if (voiceSearchRes.voice_search === undefined || voiceSearchRes.voice_search === "no") {
         ret.push(document.getElementById("voice-search-button"))
+    }
+
+    if (thumnailRes.thumnails === undefined || thumnailRes.thumnails === "no") {
+        ret.push(...Array.from(document.getElementsByTagName("yt-thumbnail-view-model")))
     }
 
     remove_items_list(ret)

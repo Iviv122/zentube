@@ -12,7 +12,8 @@ const properites = [
     "merch",
     "clip_save",
     "tickets",
-    "voice_search"
+    "voice_search",
+    "thumnails"
 ]
 const checkboxes = Array.from(document.getElementsByTagName("input"))
 
