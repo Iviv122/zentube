@@ -1,14 +1,20 @@
 {
   "manifest_version": 3,
   "name": "Zentube",
-  "version": "1.0",
   "description": "Customization for youtube clearance",
+  "home_page": "",
+  "version": "1.0",
   "icons": {
     "32": "icons/icon32.png"
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "zentube@addon"
+      "id": "zentube@iviv122",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
     }
   },
   "action": {
@@ -30,7 +36,6 @@
     "page": "options/options.html"
   },
   "permissions": [
-    "storage",
-    "scripting"
+    "storage"
   ]
 }
