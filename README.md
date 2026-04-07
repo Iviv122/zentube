@@ -3,6 +3,7 @@
 Addon purposes are:
 - reduce doomscrolling
 - reduce uncontrollable content consuption
+- turn off Youtube Shorts™
 - make usage a bit more enjoyable
 
 | :warning: WARNING                                                                     |
@@ -13,7 +14,6 @@ Addon purposes are:
 Permissions:
 - storage permission, used for settings/options saving
 
-Youtube Shorts 
 
 usage:
 video here*
