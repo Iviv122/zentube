@@ -1,19 +1,14 @@
 {
   "manifest_version": 2,
-  "name": "Borderify",
+  "name": "Zentube",
   "version": "1.0",
-  "description": "Adds a red border to all webpages matching mozilla.org.",
+  "description": "Customization for youtube clearance",
   "icons": {
-    "48": "icons/border-48.png"
+    "32": "icons/icon32.png"
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "beastify@mozilla.org",
-      "data_collection_permissions": {
-        "required": [
-          "none"
-        ]
-      }
+      "id": "zentube@addon"
     }
   },
   "content_scripts": [
