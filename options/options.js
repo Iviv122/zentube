@@ -11,8 +11,10 @@ const properites = [
     "like_dislike",
     "merch",
     "clip_save",
-    "tickets"
+    "tickets",
+    "voice_search"
 ]
+const checkboxes = Array.from(document.getElementsByTagName("input"))
 
 const enable_all = document.getElementById("enableall")
 const disable_all = document.getElementById("disableall")
@@ -54,7 +56,6 @@ function turn_off_everything() {
 }
 
 function saveOptions(e) {
-    e.preventDefault();
     let data = {
         intro_label: false,
     }
@@ -64,6 +65,9 @@ function saveOptions(e) {
     });
 
     browser.storage.sync.set(data)
+    browser.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+        browser.tabs.sendMessage(tabs[0].id, { type: "updateSettings" });
+    });
 }
 
 function restoreOptions() {
@@ -82,3 +86,4 @@ enable_all.addEventListener("click", turn_on_everything);
 disable_all.addEventListener("click", turn_off_everything);
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);
+checkboxes.forEach(checkbox => checkbox.addEventListener("click", saveOptions))

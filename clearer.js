@@ -90,6 +90,7 @@ async function additional_removal() {
     const leftMenuRes = await browser.storage.sync.get("left_panel");
     const logoRes = await browser.storage.sync.get("logo");
     const accountInfoRes = await browser.storage.sync.get("account_info");
+    const voiceSearchRes = await browser.storage.sync.get("voice_search");
 
     if (leftMenuRes.left_panel === undefined || leftMenuRes.left_panel === "no") {
         ret.push(document.getElementById("guide-wrapper"));
@@ -113,11 +114,11 @@ async function additional_removal() {
         }
     }
 
-
-
+    if (voiceSearchRes.voice_search === undefined || voiceSearchRes.voice_search === "no") {
+        ret.push(document.getElementById("voice-search-button"))
+    }
 
     remove_items_list(ret)
-    return ret;
 }
 
 async function execute_always() {
@@ -132,7 +133,6 @@ async function execute_always() {
         document.getElementById("reel-overlay-container"),
         document.getElementById("shorts-container"),
         document.getElementById("shorts-inner-container"),
-        document.getElementById("voice-search-button"),
         document.getElementById("chips-wrapper"),
         ...Array.from(document.getElementsByTagName("grid-shelf-view-model")),
         ...Array.from(document.getElementsByTagName("chip-bar-view-model")),
@@ -142,7 +142,7 @@ async function execute_always() {
         ...Array.from(document.getElementsByTagName("yt-chip-cloud-renderer")),
         ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/"), // remove short button on main page in left panel
         ...Array.from(document.getElementsByTagName("ytd-engagement-panel-section-list-renderer")), // ENGAGING CONTENT LOL, GO CHECK THIS XDDD
-        ...Array.from(document.getElementsByName("ytd-companion-slot-renderer"))
+        ...Array.from(document.getElementsByName("ytd-companion-slot-renderer")) // COMPANTION PANEL, YEAH SURE (same as previous)
     ]
     additional_removal()
     remove_items_list(remove_elements)
@@ -205,3 +205,9 @@ let events_always = [
 events_always.forEach(e => {
     document.addEventListener(e, execute_always);
 })
+
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === "updateSettings") {
+        execute_always()
+    }
+});
