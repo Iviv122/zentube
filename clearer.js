@@ -32,6 +32,7 @@ async function remove_during_video() {
     const videoAuthorRes = await browser.storage.sync.get("video_author");
     const likeDislikeRes = await browser.storage.sync.get("like_dislike");
     const merchRes = await browser.storage.sync.get("merch");
+    const clipsaveRes = await browser.storage.sync.get("clip_save");
 
     if (rightPanelRes.right_panel === undefined || rightPanelRes.right_panel === "no") {
         remove_elements.push(document.getElementById("related")); // remove videos without playlist
@@ -69,6 +70,11 @@ async function remove_during_video() {
         remove_elements.push(
             ...Array.from(document.getElementsByTagName("ytd-merch-shelf-renderer"))
         )
+    }
+
+    if (clipsaveRes.clip_save === undefined || clipsaveRes.clip_save === "no") {
+        // clip,
+        remove_elements.push(document.getElementById("flexible-item-buttons"));
     }
 
     remove_items_list(remove_elements);

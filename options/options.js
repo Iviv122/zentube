@@ -9,7 +9,8 @@ const properites = [
   "account_info",
   "video_author",
   "like_dislike",
-  "merch"
+  "merch",
+  "clip_save"
 ]
 
 function onError(error) {
