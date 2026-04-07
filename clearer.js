@@ -36,32 +36,27 @@ async function remove_during_video() {
     const ticketsRes = await browser.storage.sync.get("tickets");
 
     if (rightPanelRes.right_panel === undefined || rightPanelRes.right_panel === "no") {
-        remove_elements.push(document.getElementById("related")); // remove videos without playlist
+        remove_elements.push(document.getElementById("related")); // container for related videos 
     }
 
     if (commentsRes.comments_section === undefined || commentsRes.comments_section === "no") {
         remove_elements.push(
-            ...Array.from(document.getElementsByTagName("ytd-comments"))
+            ...Array.from(document.getElementsByTagName("ytd-comments")) // container
         );
     }
     if (playlistRes.playlist === undefined || playlistRes.playlist === "no") {
         remove_elements.push(
-            ...Array.from(document.getElementsByTagName("ytd-playlist-panel-renderer"))
-        );
-    }
-    if (playlistRes.playlist === undefined || playlistRes.playlist === "no") {
-        remove_elements.push(
-            ...Array.from(document.getElementsByTagName("ytd-playlist-panel-renderer"))
+            ...Array.from(document.getElementsByTagName("ytd-playlist-panel-renderer")) // removes playlist list but still uses it
         );
     }
     if (videoAuthorRes.video_author === undefined || videoAuthorRes.video_author === "no") {
-        let author = document.getElementById("owner");
+        let author = document.getElementById("owner"); // who created video, subscribe button etc.
         while (author.firstChild) {
             author.removeChild(author.firstChild);
         }
     }
     if (likeDislikeRes.like_dislike === undefined || likeDislikeRes.like_dislike === "no") {
-        let el = document.getElementsByTagName("segmented-like-dislike-button-view-model")[0];
+        let el = document.getElementsByTagName("segmented-like-dislike-button-view-model")[0]; // just in case, so it won't affect any other
         while (el.firstChild) {
             el.removeChild(el.firstChild);
         }
@@ -69,15 +64,15 @@ async function remove_during_video() {
 
     if (merchRes.merch === undefined || merchRes.merch === "no") {
         remove_elements.push(
-            ...Array.from(document.getElementsByTagName("ytd-merch-shelf-renderer"))
+            ...Array.from(document.getElementsByTagName("ytd-merch-shelf-renderer")) // container
         )
     }
 
     if (clipsaveRes.clip_save === undefined || clipsaveRes.clip_save === "no") {
-        remove_elements.push(document.getElementById("flexible-item-buttons"));
+        remove_elements.push(document.getElementById("flexible-item-buttons")); // save and clip button, if remove byt tag/id removes all buttons in app
     }
     if (ticketsRes.tickets === undefined || ticketsRes.tickets === "no") {
-        remove_elements.push(...Array.from(document.getElementsByTagName("ytd-ticket-shelf-renderer")))
+        remove_elements.push(...Array.from(document.getElementsByTagName("ytd-ticket-shelf-renderer"))) // countainer
     }
 
     remove_items_list(remove_elements);
@@ -94,14 +89,14 @@ async function additional_removal() {
     const thumnailRes = await browser.storage.sync.get("thumnails");
 
     if (leftMenuRes.left_panel === undefined || leftMenuRes.left_panel === "no") {
-        ret.push(document.getElementById("guide-wrapper"));
-        ret.push(...Array.from(document.getElementsByTagName("ytd-mini-guide-renderer")));
-        ret.push(document.getElementById("guide-button"));
+        ret.push(document.getElementById("guide-wrapper")); // nav menu itself
+        ret.push(...Array.from(document.getElementsByTagName("ytd-mini-guide-renderer"))); // mobile version of nav menu
+        ret.push(document.getElementById("guide-button")); // button to toggle nav menu
     }
 
     if (logoRes.logo === undefined || logoRes.logo === "no") {
         Array.from(document.getElementsByTagName("ytd-topbar-logo-renderer")).forEach(el => {
-            while (el.firstChild) {
+            while (el.firstChild) { // otherwise search bar displaces from center
                 el.removeChild(el.firstChild)
             }
         }
@@ -110,13 +105,13 @@ async function additional_removal() {
 
     if (accountInfoRes.account_info === undefined || accountInfoRes.account_info === "no") {
         let right = document.getElementById("end");
-        while (right.firstChild) {
+        while (right.firstChild) { // otherwise search bar displaces from center
             right.removeChild(right.firstChild);
         }
     }
 
     if (voiceSearchRes.voice_search === undefined || voiceSearchRes.voice_search === "no") {
-        ret.push(document.getElementById("voice-search-button"))
+        ret.push(document.getElementById("voice-search-button")) // anyone uses it?
     }
 
     if (thumnailRes.thumnails === undefined || thumnailRes.thumnails === "no") {
@@ -135,16 +130,16 @@ async function execute_always() {
     }
 
     let remove_elements = [
-        document.getElementById("reel-overlay-container"),
-        document.getElementById("shorts-container"),
-        document.getElementById("shorts-inner-container"),
-        document.getElementById("chips-wrapper"),
-        ...Array.from(document.getElementsByTagName("grid-shelf-view-model")),
-        ...Array.from(document.getElementsByTagName("chip-bar-view-model")),
-        ...Array.from(document.getElementsByTagName("ytd-reel-shelf-renderer")),
-        ...Array.from(document.getElementsByTagName("ytd-shorts")),
-        ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")),
-        ...Array.from(document.getElementsByTagName("yt-chip-cloud-renderer")),
+        document.getElementById("reel-overlay-container"), // die
+        document.getElementById("shorts-container"), // die
+        document.getElementById("shorts-inner-container"), // die
+        document.getElementById("chips-wrapper"), // does anyone uses them?
+        ...Array.from(document.getElementsByTagName("grid-shelf-view-model")), // does anyone uses them?
+        ...Array.from(document.getElementsByTagName("chip-bar-view-model")), // does anyone uses them?
+        ...Array.from(document.getElementsByTagName("ytd-reel-shelf-renderer")), // die
+        ...Array.from(document.getElementsByTagName("ytd-shorts")), // die
+        ...Array.from(document.getElementsByTagName("ytd-reel-video-renderer")), // die
+        ...Array.from(document.getElementsByTagName("yt-chip-cloud-renderer")), // does anyone uses them?
         ...Array.from(document.getElementsByTagName("a")).filter(e => e.title === "Shorts" || e.href === "/shorts/"), // remove short button on main page in left panel
         ...Array.from(document.getElementsByTagName("ytd-engagement-panel-section-list-renderer")), // ENGAGING CONTENT LOL, GO CHECK THIS XDDD
         ...Array.from(document.getElementsByName("ytd-companion-slot-renderer")) // COMPANTION PANEL, YEAH SURE (same as previous)

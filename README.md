@@ -24,3 +24,4 @@ Known bugs:
 - Clip functionality is broken (it doesn't work because of removing "ytd-engagement-panel-title-header-renderer" which also responses for showing advertise)
 - Youtube shorts will appear in results if it shows as full size video
 - Youtube shorts player plays audio sometimes somehow
+- Playlist may be hidden but play order will follow it as usual
