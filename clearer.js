@@ -33,6 +33,7 @@ async function remove_during_video() {
     const likeDislikeRes = await browser.storage.sync.get("like_dislike");
     const merchRes = await browser.storage.sync.get("merch");
     const clipsaveRes = await browser.storage.sync.get("clip_save");
+    const ticketsRes = await browser.storage.sync.get("tickets");
 
     if (rightPanelRes.right_panel === undefined || rightPanelRes.right_panel === "no") {
         remove_elements.push(document.getElementById("related")); // remove videos without playlist
@@ -73,8 +74,10 @@ async function remove_during_video() {
     }
 
     if (clipsaveRes.clip_save === undefined || clipsaveRes.clip_save === "no") {
-        // clip,
         remove_elements.push(document.getElementById("flexible-item-buttons"));
+    }
+    if (ticketsRes.tickets === undefined || ticketsRes.tickets === "no") {
+        remove_elements.push(...Array.from(document.getElementsByTagName("ytd-ticket-shelf-renderer")))
     }
 
     remove_items_list(remove_elements);
