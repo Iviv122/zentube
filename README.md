@@ -18,7 +18,11 @@ Permissions:
 - storage permission, used for settings/options saving
 
 usage:
-video here*
+
+
+https://github.com/user-attachments/assets/8e9ce31d-5b49-4630-aaf4-701b8f31920a
+
+
 
 Known bugs:
 - Clip functionality is broken (it doesn't work because of removing "ytd-engagement-panel-title-header-renderer" which also responses for showing advertise)
